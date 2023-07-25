@@ -29,7 +29,7 @@ namespace filmesLand_api.Shared.Context.Implementations
                     estudio AS Estudio,
                     avaliacao AS Avaliacao,
                     isAvaliado AS IsAvaliado
-                 FROM filmesland.filmes
+                 FROM filmes
                  WHERE isAvaliado = 0";
 
             return query;

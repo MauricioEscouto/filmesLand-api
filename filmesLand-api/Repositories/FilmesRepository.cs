@@ -43,13 +43,13 @@ namespace filmesLand_api.Repositories
             return Task.CompletedTask;
         }
 
-        public Task AtualizarFilme(int id, Filme filme, CancellationToken cancellationToken)
+        public Task<int> AtualizarFilme(int id, Filme filme, CancellationToken cancellationToken)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            connection.Execute(querys.AtualizarFilme(id), filme);
-            return Task.CompletedTask;
+            var resposta = connection.Execute(querys.AtualizarFilme(id), filme);
+            return Task.FromResult(resposta);
         }
 
         public Task AvaliarFilme(int id, float nota, CancellationToken cancellationToken)
