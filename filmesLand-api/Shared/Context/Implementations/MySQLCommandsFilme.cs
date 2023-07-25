@@ -15,7 +15,7 @@ namespace filmesLand_api.Shared.Context.Implementations
                     estudio AS Estudio,
                     avaliacao AS Avaliacao,
                     isAvaliado AS IsAvaliado
-                 FROM filmesland.filmes";
+                 FROM filmes";
 
             return query;
         }
@@ -37,7 +37,7 @@ namespace filmesLand_api.Shared.Context.Implementations
 
         public string CriarFilme()
         {
-            string query = $@"INSERT INTO filmesland.filmes
+            string query = $@"INSERT INTO filmes
                                 ( titulo
                                 , diretor
                                 , estudio) 
@@ -52,7 +52,7 @@ namespace filmesLand_api.Shared.Context.Implementations
 
         public string AtualizarFilme(int id)
         {
-            string query = $@"UPDATE filmesland.filmes SET 
+            string query = $@"UPDATE filmes SET 
                           titulo = @Titulo
                         , diretor = @Diretor
                         , estudio = @Estudio
@@ -66,7 +66,7 @@ namespace filmesLand_api.Shared.Context.Implementations
         {
             string notaFormatada = nota.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-            string query = $@"UPDATE filmesland.filmes SET 
+            string query = $@"UPDATE filmes SET 
                           avaliacao = {notaFormatada}
                         , isAvaliado = 1
                             WHERE id = {id}
@@ -77,7 +77,7 @@ namespace filmesLand_api.Shared.Context.Implementations
 
         public string DeletarFilme(int id)
         {
-            string query = $@"DELETE FROM filmesland.filmes WHERE id = {id}";
+            string query = $@"DELETE FROM filmes WHERE id = {id}";
 
             return query;
         }
