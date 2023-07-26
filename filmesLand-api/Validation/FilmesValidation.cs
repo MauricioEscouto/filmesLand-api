@@ -60,5 +60,25 @@ namespace filmesLand_api.Validation
 
             return _outputPort.Sucesso("Filme atualizado com sucesso");
         }
+
+        public async Task<IActionResult> AvaliarFilmeValidation(float nota)
+        {
+            if (nota < 0 || nota > 10)
+            {
+                return _outputPort.FalhaRequisicao("A nota de avaliação deve estar entre 0 e 10");
+            }
+
+            return _outputPort.Sucesso("Filme avaliado com sucesso");
+        }
+
+        public async Task<IActionResult> DeletarFilmeValidation(int respostaPosRequisicao)
+        {
+            if (respostaPosRequisicao == 0)
+            {
+                return _outputPort.NaoEncontrado("O filme desejado para exclusão não foi encontrado");
+            }
+
+            return _outputPort.Sucesso("Filme deletado com sucesso");
+        }
     }
 }

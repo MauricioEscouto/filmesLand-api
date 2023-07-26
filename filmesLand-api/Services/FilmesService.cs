@@ -78,15 +78,37 @@ namespace filmesLand_api.Services
 
         public async Task<IActionResult> AvaliarFilmeServices(int id, float nota, CancellationToken cancellationToken)
         {
-            await _repository.AvaliarFilme(id, nota, cancellationToken);
+            var resposta = await _validation.AvaliarFilmeValidation(nota) as ObjectResult;
+            if (resposta!.StatusCode == 400)
+            {
+                string mensagem = resposta.Value!.ToString()!;
+                return _outputPort.FalhaRequisicao(mensagem);
+            }
+            else
+            {
+                var respostaPosRequisicao = await _repository.AvaliarFilme(id, nota, cancellationToken);
+                var respostaValidation = await _validation.AtualizarFilmeValidation(respostaPosRequisicao) as ObjectResult;
+
+                if (respostaValidation.StatusCode == 404)
+                {
+                    string mensagem = respostaValidation.Value!.ToString()!;
+                    return _outputPort.NaoEncontrado(mensagem);
+                }
+            }
 
             return _outputPort.Sucesso("Filme avaliado com sucesso");
         }
 
         public async Task<IActionResult> DeletarFilmeServices(int id, CancellationToken cancellationToken)
         {
-            await _repository.DeletarFilme(id, cancellationToken);
+            var respostaPosRequisicao = await _repository.DeletarFilme(id, cancellationToken);
+            var respostaValidation = await _validation.DeletarFilmeValidation(respostaPosRequisicao) as ObjectResult;
 
+            if (respostaValidation.StatusCode == 404)
+            {
+                string mensagem = respostaValidation.Value!.ToString()!;
+                return _outputPort.NaoEncontrado(mensagem);
+            }
             return _outputPort.Sucesso("Filme excluído com sucesso");
         }
     }

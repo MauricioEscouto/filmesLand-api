@@ -52,22 +52,22 @@ namespace filmesLand_api.Repositories
             return Task.FromResult(resposta);
         }
 
-        public Task AvaliarFilme(int id, float nota, CancellationToken cancellationToken)
+        public Task<int> AvaliarFilme(int id, float nota, CancellationToken cancellationToken)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            connection.Execute(querys.AvaliarFilme(id, nota), cancellationToken);
-            return Task.CompletedTask;
+            var resposta = connection.Execute(querys.AvaliarFilme(id, nota), cancellationToken);
+            return Task.FromResult(resposta);
         }
 
-        public Task DeletarFilme(int id, CancellationToken cancellationToken)
+        public Task<int> DeletarFilme(int id, CancellationToken cancellationToken)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            connection.Execute(querys.DeletarFilme(id), cancellationToken);
-            return Task.CompletedTask;
+            var resposta = connection.Execute(querys.DeletarFilme(id), cancellationToken);
+            return Task.FromResult(resposta);
         }
     }
 }
