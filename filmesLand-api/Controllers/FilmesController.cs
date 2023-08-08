@@ -7,57 +7,57 @@ namespace filmesLand_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmesController : ControllerBase
+    public class MovieController : ControllerBase
     {
         private readonly FilmesService _service;
 
-        public FilmesController(FilmesService service)
+        public MovieController(FilmesService service)
         {
             _service = service;
         }
 
-        [HttpGet("Obter")]
+        [HttpGet("Get")]
         [ProducesResponseType(typeof(Filme), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ObterFilmes(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMovies()
         {
-            return await _service.ObterFilmesServices(cancellationToken);
+            return await _service.GetMoviesServices();
         }
 
-        [HttpGet("ObterNaoAvaliados")]
+        [HttpGet("GetUnrated")]
         [ProducesResponseType(typeof(Filme), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ObterFilmesNaoAvaliados(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUnratedMovies()
         {
-            return await _service.ObterFilmesNaoAvaliadosServices(cancellationToken);
+            return await _service.GetUnratedMoviesServices();
         }
 
         [HttpPost]
-        [Route("Criar")]
+        [Route("Create")]
         [ProducesResponseType(typeof(FilmeRequest), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarFilme([FromBody] FilmeRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateMovie([FromBody] FilmeRequest request)
         {
-            return await _service.CriarFilmeServices(request, cancellationToken);
+            return await _service.CreateMovieServices(request);
         }
 
         [HttpPut]
-        [Route("Atualizar/{id:int}")]
-        public async Task<IActionResult> AtualizarFilme(int id, FilmeRequest request, CancellationToken cancellationToken)
+        [Route("Update/{id:int}")]
+        public async Task<IActionResult> UpdateMovie(int id, FilmeRequest request)
         {
-            return await _service.AtualizarFilmeServices(id, request, cancellationToken);
+            return await _service.UpdateMovieServices(id, request);
         }
 
         [HttpPut]
-        [Route("Avaliar/{id:int}")]
-        public async Task<IActionResult> AvaliarFilme(int id, float nota, CancellationToken cancellationToken)
+        [Route("Rate/{id:int}")]
+        public async Task<IActionResult> RateMovie(int id, float nota)
         {
-            return await _service.AvaliarFilmeServices(id, nota, cancellationToken);
+            return await _service.RateMovieServices(id, nota);
         }
 
         [HttpDelete]
-        [Route("Deletar/{id:int}")]
+        [Route("Delete/{id:int}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Deletar(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteMovie(int id)
         {
-            return await _service.DeletarFilmeServices(id, cancellationToken);
+            return await _service.DeleteMovieServices(id);
         }
     }
 }

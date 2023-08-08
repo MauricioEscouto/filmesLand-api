@@ -16,25 +16,25 @@ namespace filmesLand_api.Repositories
             _dbContext = _dbConnectionFactory.ObterContexto(AppSettingsConstantes.DBMauricio);
         }
 
-        public async Task<List<Filme>> ObterFilmesRepository(CancellationToken cancellationToken)
+        public async Task<List<Filme>> ObterFilmesRepository()
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            IEnumerable<Filme> filmes = await connection.QueryAsync<Filme>(querys.ObterFilmes(), cancellationToken);
+            IEnumerable<Filme> filmes = await connection.QueryAsync<Filme>(querys.ObterFilmes());
             return filmes.ToList();
         }
 
-        public async Task<List<Filme>> ObterFilmesNaoAvaliadosRepository(CancellationToken cancellationToken)
+        public async Task<List<Filme>> ObterFilmesNaoAvaliadosRepository()
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            IEnumerable<Filme> filmes = await connection.QueryAsync<Filme>(querys.ObterFilmesNaoAvaliados(), cancellationToken);
+            IEnumerable<Filme> filmes = await connection.QueryAsync<Filme>(querys.ObterFilmesNaoAvaliados());
             return filmes.ToList();
         }
 
-        public Task CriarFilme(Filme filme, CancellationToken cancellationToken)
+        public Task CriarFilme(Filme filme)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
@@ -43,7 +43,7 @@ namespace filmesLand_api.Repositories
             return Task.CompletedTask;
         }
 
-        public Task<int> AtualizarFilme(int id, Filme filme, CancellationToken cancellationToken)
+        public Task<int> AtualizarFilme(int id, Filme filme)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
@@ -52,21 +52,21 @@ namespace filmesLand_api.Repositories
             return Task.FromResult(resposta);
         }
 
-        public Task<int> AvaliarFilme(int id, float nota, CancellationToken cancellationToken)
+        public Task<int> AvaliarFilme(int id, float nota)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            var resposta = connection.Execute(querys.AvaliarFilme(id, nota), cancellationToken);
+            var resposta = connection.Execute(querys.AvaliarFilme(id, nota));
             return Task.FromResult(resposta);
         }
 
-        public Task<int> DeletarFilme(int id, CancellationToken cancellationToken)
+        public Task<int> DeletarFilme(int id)
         {
             var connection = _dbContext.connection;
             var querys = _dbContext.sqlCommand;
 
-            var resposta = connection.Execute(querys.DeletarFilme(id), cancellationToken);
+            var resposta = connection.Execute(querys.DeletarFilme(id));
             return Task.FromResult(resposta);
         }
     }
